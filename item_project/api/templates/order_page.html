@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Page</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Order #{{ order.id }}</h1>
+    {% for item_order in order.itemorder_set.all %}
+        <p>Item: {{ item_order.item.name }}</p>
+        <p>Price: {{ item_order.item.price }} {{ item_order.item.currency }}</p>
+    {% endfor %}
+    {% if order.get_currency == False %}
+        <h3>Items in the order have different currencies.</h3>
+    {% else %}
+        <h3>Total price: {{ order.get_total_price }} {{ order.get_currency }}</h3>
+        <button onclick="buyOrder({{ order.id }})">Buy</button>
+    {% endif %}
+    
+    <script>
+        function buyOrder(orderId) {
+            fetch(`/api/buy_order/${orderId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        window.location.href = `http://localhost:8000/api/buy_order/${orderId}/?session_id=${data.session_id}`;
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
