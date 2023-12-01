@@ -1,0 +1,23 @@
+version: '3'
+
+volumes:
+  pg_data:
+
+services:
+  db:
+    image: postgres:13
+    env_file: ./item_project/.env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: ./item_project/.env
+    ports:
+      - 8000:8000
+    volumes:
+      - ../data:/app/data
+    depends_on:
+      - db

@@ -14,6 +14,10 @@
         <h3>Items in the order have different currencies.</h3>
     {% else %}
         <h3>Total price: {{ order.get_total_price }} {{ order.get_currency }}</h3>
+    {% endif %}
+    <p>Discount: {{ order.coupon.amount_off }} {{ order.coupon.currency }}</p>
+    <p>Tax: {{ order.tax.percentage }}%</p>
+    {% if order.get_currency != False %}
         <button onclick="buyOrder({{ order.id }})">Buy</button>
     {% endif %}
     

@@ -35,6 +35,17 @@ def get_checkout_session(request, item_id):
 
 def get_order_checkout_session(request, order_id):
     order = get_object_or_404(Order, id=order_id)
+    tax = stripe.TaxRate.create(
+        display_name=order.tax.display_name,
+        percentage=order.tax.percentage,
+        inclusive=order.tax.inclusive,
+    )
+    coupon = stripe.Coupon.create(
+        amount_off=order.coupon.amount_off,
+        currency=order.coupon.currency,
+        duration=order.coupon.duration,
+        duration_in_months=order.coupon.duration_in_months,
+    )
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=[
@@ -47,11 +58,15 @@ def get_order_checkout_session(request, order_id):
                     'unit_amount': int(order.get_total_price() * 100),
                 },
                 'quantity': 1,
+                'tax_rates': [tax['id']],
             },
         ],
         mode='payment',
         success_url='http://localhost:8000/api/success/',
         cancel_url='http://localhost:8000/api/cancel/',
+        discounts=[{
+            'coupon': coupon['id'],
+        }],
     )
     return JsonResponse({'session_id': session.id})
 
