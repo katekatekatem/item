@@ -1,8 +1,11 @@
 ### **Автор проекта:**
 
 Екатерина Мужжухина
+
 Python Backend Developer
+
 github: @katekatekatem
+
 e-mail: muzhzhukhina@mail.ru
 
 
@@ -18,15 +21,17 @@ Python 3, Django, HTML, PostgreSQL, Docker
 
 Нужно переименовать файл example.env в .env и заполнить его своими данными:
 
-> DB_NAME=postgres
-> POSTGRES_USER=postgres
-> POSTGRES_PASSWORD=postgres
-> DB_HOST=db
-> DB_PORT=5432
-> SECRET_KEY='Здесь указать секретный ключ'
-> ALLOWED_HOSTS='Здесь указать имя или IP хоста' (для локального запуска - 127.0.0.1)
-> DEBUG=False
-> STRIPE_SECRET_KEY='Здесь секретный ключ Stripe'
+```
+DB_NAME=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+DB_HOST=db
+DB_PORT=5432
+SECRET_KEY='Здесь указать секретный ключ'
+ALLOWED_HOSTS='Здесь указать имя или IP хоста' (для локального запуска - 127.0.0.1)
+DEBUG=False
+STRIPE_SECRET_KEY='Здесь секретный ключ Stripe'
+```
 
 
 ### **Как запустить проект локально:**
