@@ -7,6 +7,9 @@ from django.views.generic import TemplateView
 from item.models import Item, Order
 
 
+SUCCESS_URL = 'http://localhost:8000/api/success/'
+CANCEL_URL = 'http://localhost:8000/api/cancel/'
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -27,8 +30,8 @@ def get_checkout_session(request, item_id):
             },
         ],
         mode='payment',
-        success_url='http://localhost:8000/api/success/',
-        cancel_url='http://localhost:8000/api/cancel/',
+        success_url=SUCCESS_URL,
+        cancel_url=CANCEL_URL,
     )
     return JsonResponse({'session_id': session.id})
 
@@ -62,8 +65,8 @@ def get_order_checkout_session(request, order_id):
             },
         ],
         mode='payment',
-        success_url='http://localhost:8000/api/success/',
-        cancel_url='http://localhost:8000/api/cancel/',
+        success_url=SUCCESS_URL,
+        cancel_url=CANCEL_URL,
         discounts=[{
             'coupon': coupon['id'],
         }],
